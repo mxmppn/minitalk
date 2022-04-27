@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/04/27 16:05:10 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 18:28:00 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_space(char c)
 	return (0);
 }
 
-int	is_number(char *str)
+int	is_an_int(char *str)
 {
 	ssize_t	i;
 
@@ -59,42 +59,49 @@ int	ft_atoi(const char *str)
 	return (result * moins);
 }
 
-int	convert_to_binary(int nbr)
+void	send_binary_to_serv(int nbr, int ue_pid)
 {
-	int	binary_value;
-	int	poids;
+	long long	binary_value;
+	int			byte;
 
 	binary_value = 0;
-	poids = 1;
-	if (nbr <= 1)
-		return (nbr);
-	while (nbr > 0)
+	byte = 8;
+	while (byte > 0)
 	{
-		binary_value += ((nbr % 2) * (poids));
+		if (nbr % 2 == 0)
+		{
+			printf("i send 0\n");
+			kill(ue_pid, SIGUSR1);
+		}
+		else
+		{
+			printf("i send 1\n");
+			kill(ue_pid, SIGUSR2);
+		}
 		nbr /= 2;
-		poids *= 10;
+		byte--;
 	}
-	return (binary_value);
+	return ;
 }
 
 int	main(int ac, char **av)
 {
 	pid_t	ue_pid;
+	int		test;
 
 	if (ac < 3)
 	{
 		printf("[ARG NBR ERROR] : 2 arguments needed : PID and String\n");
 		exit(EXIT_FAILURE);
 	}
-	if (is_number(av[1]) == -1)
+	if (is_an_int(av[1]) == -1)
 	{
 		printf("[ARG TYPE ERROR] : Wrong PID format\n");
 		exit(EXIT_FAILURE);
 	}
 	ue_pid = ft_atoi(av[1]);
-	if (strcmp(av[2], "oui") == 0)
-		kill(ue_pid, SIGUSR1);
-	if (strcmp(av[2], "non") == 0)
-		kill(ue_pid, SIGUSR2);
+	test = atoi(av[2]);
+	printf("TEST=%d\n", test);
+	send_binary_to_serv(test, ue_pid);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:23:43 by mpepin            #+#    #+#             */
-/*   Updated: 2022/04/27 15:14:52 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/04/27 16:29:13 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <signal.h>
-# include "./printf/ft_printf.h"
-
 /* ************************************************************************ */
 /*																			*/
 /*																			*/
@@ -51,7 +49,7 @@
 /*																			*/
 /* ************************************************************************ */
 
-int			ft_printf(const char *fmt, ...);
+// int			ft_printf(const char *fmt, ...);
 int			is_space(char c);
 int			is_number(char *str);
 int			ft_atoi(const char *str);
