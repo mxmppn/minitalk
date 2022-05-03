@@ -6,90 +6,59 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/04/27 18:28:00 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 15:30:29 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-int	is_space(char c)
-{
-	if (c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
-
-int	is_an_int(char *str)
-{
-	ssize_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!(str[i] >= 48 && str[i] <= 57) && !(i == 0 && str[i] == '-'))
-			return (-1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_atoi(const char *str)
-{
-	int	i;
-	int	moins;
-	int	result;
-
-	i = 0;
-	moins = 1;
-	result = 0;
-	while (is_space(str[i]))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			moins *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = (result * 10) + (str[i] - 48);
-		i++;
-	}
-	return (result * moins);
-}
-
+// The chad binary sender to the chad signal receiver :
+// Send a signal (SIGUSR1 or SIGUSR2, representing binary 0 or 1)
+// to the "ue_pid" process ;
+// with a delay of 1/10th of a millisecond, to fix the lag issue
 void	send_binary_to_serv(int nbr, int ue_pid)
 {
 	long long	binary_value;
 	int			byte;
+	int			handshake_test;
 
 	binary_value = 0;
-	byte = 8;
-	while (byte > 0)
+	byte = 0;
+	handshake_test = 0;
+	while (byte < 8)
 	{
 		if (nbr % 2 == 0)
 		{
-			printf("i send 0\n");
 			kill(ue_pid, SIGUSR1);
+			printf("sent=0\n");
 		}
 		else
 		{
-			printf("i send 1\n");
 			kill(ue_pid, SIGUSR2);
+			printf("sent=1\n");
 		}
 		nbr /= 2;
-		byte--;
+		byte++;
+		usleep(40);
+		// while (!signal_receive_test())
+		// 	usleep(100);
 	}
 	return ;
 }
 
+// The main takes the PID of
+// the process who you want to communicate with as arg1
+// and the message u want to send as arg2, 3, ..., n.
+
+// After the arg tests, it extracts the message and send
+// it char by char to send_binary_to_serv()
 int	main(int ac, char **av)
 {
 	pid_t	ue_pid;
+	int		i;
 	int		test;
 
-	if (ac < 3)
+	if (ac != 3)
 	{
 		printf("[ARG NBR ERROR] : 2 arguments needed : PID and String\n");
 		exit(EXIT_FAILURE);
@@ -100,8 +69,13 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	ue_pid = ft_atoi(av[1]);
-	test = atoi(av[2]);
-	printf("TEST=%d\n", test);
-	send_binary_to_serv(test, ue_pid);
+	i = 0;
+	printf("PID=%d\n", ue_pid);
+	while (av[2][i])
+	{
+		test = av[2][i];
+		send_binary_to_serv(test, ue_pid);
+		i++;
+	}
 	return (0);
 }
