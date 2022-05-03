@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/05/03 15:38:29 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/03 16:35:00 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	main(int ac, char **av)
 	{
 		signal(SIGUSR1, my_handler);
 		signal(SIGUSR2, my_handler);
-		usleep
+		usleep(100);
 	}
 	return (0);
 }
