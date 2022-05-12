@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:23:43 by mpepin            #+#    #+#             */
-/*   Updated: 2022/05/03 15:32:23 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/08 23:48:14 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <signal.h>
+
 /* ************************************************************************ */
 /*																			*/
 /*																			*/
@@ -58,6 +59,16 @@ void		send_binary_to_serv(int nbr, int ue_pid);
 int			*reset_binary_tab(int *int_tab);
 char		convert_to_char(int *int_tab);
 void		my_handler(int signum);
+
+/* ************************************************************************ */
+/*																			*/
+/*																			*/
+/*								VARIABLES									*/
+/*																			*/
+/*																			*/
+/* ************************************************************************ */
+
+static volatile int	client_pid;
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 /*~IM JUST A SEPARATOR, DON'T MIND I ONLY EXIST FOR THIS REASON, LIFE IS PAIN~*/

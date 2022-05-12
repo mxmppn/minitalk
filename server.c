@@ -6,11 +6,13 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/05/03 16:35:00 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 01:26:28 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+client_pid = -1;
 
 // Has the role of resetting to {0, 0, 0, 0, 0, 0, 0, 0} an "int	int_tab[8]"
 int	*reset_binary_tab(int *int_tab)
@@ -24,6 +26,29 @@ int	*reset_binary_tab(int *int_tab)
 		count ++;
 	}
 	return (int_tab);
+}
+
+void	get_the_client_pid()
+{
+	client_pid = ;
+	return ;
+}
+
+void	print_my_int_tab(int *int_tab)
+{
+	int		i;
+	char	c;
+
+	i = 0;
+	write(1, "int tab=", 8);
+	while (i < 8)
+	{
+		c = int_tab[i] + 48;
+		write(1, &c, 1);
+		i++;
+	}
+	write(1, "\n", 1);
+	return ;
 }
 
 // takes the tab of int, which represent the binary value (conventionnal order)
@@ -58,6 +83,7 @@ void	my_handler(int signum)
 	static int	count = 7;
 	static int	binary_int[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 	char		byte_to_char;
+	
 
 	byte_to_char = 0;
 	if (signum == SIGUSR1)
@@ -73,8 +99,12 @@ void	my_handler(int signum)
 	count--;
 	if (count == -1)
 	{
+		// write(1, "ICI\n", 4);
+		print_my_int_tab(binary_int);
+		// write(1, "\n", 1);
 		byte_to_char = convert_to_char(binary_int);
 		write(1, &byte_to_char, 1);
+		write(1, "\n", 1);
 		reset_binary_tab(binary_int);
 		count = 7;
 	}
@@ -88,8 +118,8 @@ void	my_handler(int signum)
 // and call my_handler when received (infinite loop)
 int	main(int ac, char **av)
 {
-	pid_t	server_pid;
-	int		count;
+	pid_t				server_pid;
+	struct sigaction	sa;
 
 	if (ac != 1)
 	{
@@ -97,14 +127,13 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	server_pid = getpid();
-	count = 0;
 	if (server_pid)
 		printf("[SUCCESS] : Server opened\nCurrent PID=%d\n", server_pid);
 	while (667)
 	{
 		signal(SIGUSR1, my_handler);
 		signal(SIGUSR2, my_handler);
-		usleep(100);
+		pause();
 	}
 	return (0);
 }

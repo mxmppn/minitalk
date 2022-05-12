@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/05/03 15:30:29 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/09 17:44:31 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 {
 	long long	binary_value;
 	int			byte;
-	int			handshake_test;
 
 	binary_value = 0;
 	byte = 0;
-	handshake_test = 0;
 	while (byte < 8)
 	{
 		if (nbr % 2 == 0)
@@ -39,10 +37,18 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 		}
 		nbr /= 2;
 		byte++;
-		usleep(40);
+		usleep(1000);
 		// while (!signal_receive_test())
 		// 	usleep(100);
 	}
+	printf("END_OF_BYTE\n");
+	return ;
+}
+
+void	initiate_handshake(int ue_pid, int trust)
+{
+	kill(ue_pid, SIGUSR1);
+	pause();
 	return ;
 }
 
