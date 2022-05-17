@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/05/09 17:44:31 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/05/17 16:42:16 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 // The chad binary sender to the chad signal receiver :
 // Send a signal (SIGUSR1 or SIGUSR2, representing binary 0 or 1)
 // to the "ue_pid" process ;
-// with a delay of 1/10th of a millisecond, to fix the lag issue
+// with a delay of n microseconds, to fix the lag issue
 void	send_binary_to_serv(int nbr, int ue_pid)
 {
 	long long	binary_value;
 	int			byte;
+	int			handshake_test;
 
 	binary_value = 0;
 	byte = 0;
+	handshake_test = 0;
 	while (byte < 8)
 	{
+		usleep(100);
 		if (nbr % 2 == 0)
 		{
 			kill(ue_pid, SIGUSR1);
@@ -37,18 +40,7 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 		}
 		nbr /= 2;
 		byte++;
-		usleep(1000);
-		// while (!signal_receive_test())
-		// 	usleep(100);
 	}
-	printf("END_OF_BYTE\n");
-	return ;
-}
-
-void	initiate_handshake(int ue_pid, int trust)
-{
-	kill(ue_pid, SIGUSR1);
-	pause();
 	return ;
 }
 
