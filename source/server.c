@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 13:44:55 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 16:40:39 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,23 @@
 
 // Every 8 calls, it will print the char corresponding to the decimal
 // value of the byte stocked in the tab_int[8], then reset it to be 0 filled 
-void	my_handler(int signum)
+void	my_handler(int signum, siginfo_t *info, void *context)
 {
-	static int	count = 7;
-	static int	my_char = 0;
+	static int		count = 7;
+	static int		my_char = 0;
+	static pid_t	g_client_pid = 0;
 
+	(void) *context;
+	if (info->si_pid != g_client_pid)
+	{
+		my_char = 0;
+		count = 7;
+		g_client_pid = info->si_pid;
+	}
 	if (signum == SIGUSR1)
-	{
-		// write(1, "0\n", 2);
 		my_char = my_char * 2 + 0;
-	}
 	else if (signum == SIGUSR2)
-	{
-		// write(1, "1\n", 2);
 		my_char = my_char * 2 + 1;
-	}
 	count--;
 	if (count == -1)
 	{
@@ -52,7 +54,8 @@ void	my_handler(int signum)
 // and call my_handler when received (infinite loop)
 int	main(int ac, char **av)
 {
-	pid_t	server_pid;
+	pid_t				server_pid;
+	struct sigaction	sa;
 
 	(void) **av;
 	if (ac != 1)
@@ -63,8 +66,10 @@ int	main(int ac, char **av)
 	server_pid = getpid();
 	if (server_pid)
 		printf("[SUCCESS] : Server opened\nCurrent PID=%d\n", server_pid);
-	signal(SIGUSR1, my_handler);
-	signal(SIGUSR2, my_handler);
+	sa.sa_flags = SA_SIGINFO;
+	sa.sa_sigaction = my_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	while (667)
 		pause();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:23:43 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 12:54:54 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 16:33:08 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <signal.h>
+
 /* ************************************************************************ */
 /*																			*/
 /*																			*/
@@ -52,7 +53,17 @@
 int			check_pid_fmt(char *str);
 int			str_to_int(const char *str);
 void		send_binary_to_serv(int nbr, int ue_pid);
-void		my_handler(int signum);
+void		my_handler(int signum, siginfo_t *info, void *context);
+
+/* ************************************************************************ */
+/*																			*/
+/*																			*/
+/*								GLOBAL VARIABLES							*/
+/*																			*/
+/*																			*/
+/* ************************************************************************ */
+
+extern pid_t	g_client_pid;
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 /*~IM JUST A SEPARATOR, DON'T MIND I ONLY EXIST FOR THIS REASON, LIFE IS PAIN~*/
