@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:39 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 16:59:05 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,16 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 	int	byte;
 
 	byte = 0;
-	// printf("sent to serv =%c ; %d\n", nbr, nbr);
 	while (byte < 8)
 	{
 		if ((nbr & 0x80) == 0)
-		{
 			kill(ue_pid, SIGUSR1);
-			// printf("sent=0\n");
-		}
 		else
-		{
 			kill(ue_pid, SIGUSR2);
-			// printf("sent=1\n");
-		}
 		nbr <<= 1;
 		byte++;
 		usleep(100);
 	}
-	// printf("--------\n");
 	return ;
 }
 
