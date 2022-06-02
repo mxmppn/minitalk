@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 16:59:05 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 17:30:20 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 			kill(ue_pid, SIGUSR2);
 		nbr <<= 1;
 		byte++;
-		usleep(100);
+		usleep(150);
 	}
 	return ;
 }
@@ -65,7 +65,7 @@ int	main(int ac, char **av)
 		test = av[2][i];
 		send_binary_to_serv(test, ue_pid);
 		i++;
-		usleep(100);
+		usleep(50);
 	}
 	return (0);
 }

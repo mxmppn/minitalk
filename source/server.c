@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 16:40:39 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 17:28:09 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ void	my_handler(int signum, siginfo_t *info, void *context)
 		count = 7;
 		g_client_pid = info->si_pid;
 	}
-	if (signum == SIGUSR1)
-		my_char = my_char * 2 + 0;
-	else if (signum == SIGUSR2)
-		my_char = my_char * 2 + 1;
+	my_char = my_char * 2;
+	if (signum == SIGUSR2)
+		my_char = my_char + 1;
 	count--;
 	if (count == -1)
 	{
