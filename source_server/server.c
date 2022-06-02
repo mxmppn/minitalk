@@ -6,11 +6,11 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 17:28:09 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 19:37:22 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/minitalk.h"
+#include "../header/minitalk.h"
 
 // The chad signal receiver/handler :
 // Called when any SIGUSR1 or SIGUSR2 is received by the main, 

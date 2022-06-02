@@ -6,16 +6,12 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:23:43 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 16:33:08 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 19:37:16 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINITALK_H
 # define MINITALK_H
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-/*~IM JUST A SEPARATOR, DON'T MIND I ONLY EXIST FOR THIS REASON, LIFE IS PAIN~*/
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 /* ************************************************************************ */
 /*																			*/
@@ -63,10 +59,6 @@ void		my_handler(int signum, siginfo_t *info, void *context);
 /*																			*/
 /* ************************************************************************ */
 
-extern pid_t	g_client_pid;
-
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
-/*~IM JUST A SEPARATOR, DON'T MIND I ONLY EXIST FOR THIS REASON, LIFE IS PAIN~*/
-/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+/*						THIS IS PRETTY EMPTY, ISN'T IT ?					*/
 
 #endif

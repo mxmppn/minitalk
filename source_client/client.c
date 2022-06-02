@@ -6,15 +6,15 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 17:30:20 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 20:48:23 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/minitalk.h"
+#include "../header/minitalk.h"
 
 // The chad binary sender to the chad signal receiver :
-// Send a signal (SIGUSR1 or SIGUSR2, representing binary 0 or 1)
-// to the "ue_pid" process ;
+// send a character to the "ue_pid" process,
+// using SIGUSR1 or SIGUSR2, representing binary of 0 or 1.
 // with a delay of n microseconds, to fix the lag issue.
 // It starts by the most significant bit to the least one
 void	send_binary_to_serv(int nbr, int ue_pid)
@@ -37,15 +37,15 @@ void	send_binary_to_serv(int nbr, int ue_pid)
 
 // The main takes the PID of
 // the process who you want to communicate with as arg1
-// and the message u want to send as arg2, 3, ..., n.
+// and the message u want to send as arg2.
 
-// After the arg tests, it extracts the message and send
+// After the arg tests, it extracts the message (arg2) and send
 // it char by char to send_binary_to_serv()
 int	main(int ac, char **av)
 {
 	pid_t	ue_pid;
 	int		i;
-	int		test;
+	int		char_to_send;
 
 	if (ac != 3)
 	{
@@ -62,8 +62,8 @@ int	main(int ac, char **av)
 	printf("PID=%d\n", ue_pid);
 	while (av[2][i])
 	{
-		test = av[2][i];
-		send_binary_to_serv(test, ue_pid);
+		char_to_send = av[2][i];
+		send_binary_to_serv(char_to_send, ue_pid);
 		i++;
 		usleep(50);
 	}

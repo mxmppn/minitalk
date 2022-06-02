@@ -6,11 +6,11 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/03 15:27:14 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 13:37:16 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/02 19:32:33 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header/minitalk.h"
+#include "../header/minitalk.h"
 
 // Pretty self-explanatory, isn't it ?
 // Check if the PID is in good format : only numbers.

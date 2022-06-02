@@ -6,21 +6,22 @@
 #    By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 13:18:51 by mpepin            #+#    #+#              #
-#    Updated: 2022/06/02 16:58:29 by mpepin           ###   ########lyon.fr    #
+#    Updated: 2022/06/02 20:39:15 by mpepin           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-SERVER =	server
-CLIENT =	client
-NAME =	$(CLIENT) $(SERVER)
 HEADER_FILES =	header/minitalk.h
-# OBJECT_FILES =	object/
-SERVER_SRCS =	source/server.c\
-				source/server_utils.c
-CLIENT_SRCS =	source/client.c\
-				source/client_utils.c
+
+SERVER =	server
+SERVER_SRCS =	source_server/server.c\
+				source_server/server_utils.c
 SERVER_OBJS =	$(SERVER_SRCS:.c=.o)
+
+CLIENT =	client
+CLIENT_SRCS =	source_client/client.c\
+				source_client/client_utils.c
 CLIENT_OBJS =	$(CLIENT_SRCS:.c=.o)
+
 CC =	gcc
 C_FLAGS =	-Wall -Wextra -Werror -I.
 
@@ -44,7 +45,7 @@ clean:
 	rm -f $(SERVER_OBJS) $(CLIENT_OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all
 
