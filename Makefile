@@ -6,62 +6,46 @@
 #    By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 13:18:51 by mpepin            #+#    #+#              #
-#    Updated: 2022/04/27 13:59:24 by mpepin           ###   ########lyon.fr    #
+#    Updated: 2022/06/02 14:28:53 by mpepin           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-# All files
-SRC =	server.c \
-		client.c
+SERVER =	server
+CLIENT =	client
+NAME =	$(CLIENT) $(SERVER)
+HEADER_FILES =	header/minitalk.h
+SERVER_SRCS =	source/server.c\
+				source/server_utils.c
+CLIENT_SRCS =	source/client.c\
+				source/client_utils.c
+SERVER_OBJS =	$(SERVER_SRCS:.c=.o)
+CLIENT_OBJS =	$(CLIENT_SRCS:.c=.o)
+CC =	gcc
+C_FLAGS =	-Wall -Wextra -Werror -I.
 
-OBJS_DIR = objs/
-OBJS = ${SRC:.c=.o}
-OBJECTS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJS))
+all: $(SERVER) $(CLIENT)
 
-# Bonus files
-SRCB =	file_1 \
-		file_n
+%.o: %.c $(HEADER_FILES)
+	$(CC) $(C_FLAGS) -c $< -o $@
 
-OBJSB = ${SRCB:.c=.o}
-OBJECTS_BONUS_PREFIXED = $(addprefix $(OBJS_DIR), $(OBJSB))
+$(SERVER): $(SERVER_OBJS)
+	$(CC) $(SERVER_OBJS) -o $(SERVER)
 
-# Name of the exec file
-EXE1 = server
-EXE2 = client
+$(CLIENT): $(CLIENT_OBJS)
+	$(CC) $(CLIENT_OBJS) -o $(CLIENT)
 
-# Flags compile
-FLAGS = -Wall -Wextra -Werror
-
-# Delete
-RM = rm -f
-
-all: $(EXE1) $(EXE2)
-
-$(OBJS_DIR)%.o:	%.c libft.h
-				@mkdir -p $(OBJS_DIR)
-				@echo "Compiling: $<"
-				@clang $(FLAGS) -c $< -o $@
-
-$(NAME):	$(OBJECTS_PREFIXED)
-			@ar rcs $(NAME) $(OBJECTS_PREFIXED)
-			@echo "Libft Done !"
-
-bonus:		$(NAME) $(OBJECTS_BONUS_PREFIXED)
-			@ar rcs $(NAME) $(OBJECTS_BONUS_PREFIXED)
-			@echo "Libft Bonus Done !"
+norme:
+	make -C norme
+	@norminette $(SERVER_SRCS)
+	@norminette $(CLIENT_SRCS)
+	@norminette $(HEADER_FILES)
 
 clean:
-			rm -rf $(OBJS_DIR)
+	rm -f $(SERVER_OBJS) $(CLIENT_OBJS)
 
-fclean:		clean
-			rm -f all
+fclean: clean
+	rm -f $(NAME)
 
-re:			fclean all
+re: fclean all
 
-all: program1 program2
-
-program1: program1.c
-    gcc -o program1 program1.c
-
-program2: program2.c
-    gcc -o program2 program2.c
+.PHONY: all norme clean fclean re
