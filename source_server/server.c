@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/02 19:37:22 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/03 15:13:11 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 // The chad signal receiver/handler :
 // Called when any SIGUSR1 or SIGUSR2 is received by the main, 
-// it will creates at first call an int tab_int[8], and then fill it with
-// the value of each bits corresponding to the signal received
-// (0 for SIGUSR1, 1 for SIGUSR2).
+// it has the role of building the decimal (my_char),
+// using the signals SIGUSR1 or SIGUSR2
 
+// It works on a base of a byte : When a signal is received,
+// it multiplies (my_char) by 2; if its SIGUSR1 then adds 0 and if its 
+// SIGUSR2 then adds 1 (arithmetical construction of the byte).
 // Every 8 calls, it will print the char corresponding to the decimal
-// value of the byte stocked in the tab_int[8], then reset it to be 0 filled 
+// value of (my_char) and reset (my_char) to 0.
+// If a signal from a different PID is received, it resets (my_char), to 
+// avoid parasit bit shifting.  
 void	my_handler(int signum, siginfo_t *info, void *context)
 {
 	static int		count = 7;

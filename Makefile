@@ -6,12 +6,15 @@
 #    By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 13:18:51 by mpepin            #+#    #+#              #
-#    Updated: 2022/06/02 20:39:15 by mpepin           ###   ########lyon.fr    #
+#    Updated: 2022/06/03 15:23:33 by mpepin           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
+# * * * * * * * * * * * * * * * * Header * * * * * * * * * * * * * * * * *	#
 HEADER_FILES =	header/minitalk.h
 
+
+# * * * * * * * * * * * * * * * Executables * * * * * * * * * * * * * * * *	#		
 SERVER =	server
 SERVER_SRCS =	source_server/server.c\
 				source_server/server_utils.c
@@ -22,9 +25,13 @@ CLIENT_SRCS =	source_client/client.c\
 				source_client/client_utils.c
 CLIENT_OBJS =	$(CLIENT_SRCS:.c=.o)
 
+
+# * * * * * * * * * * * * * * * Compilation * * * * * * * * * * * * * * * *	#
 CC =	gcc
 C_FLAGS =	-Wall -Wextra -Werror -I.
 
+
+# * * * * * * * * * * * * * * * * Rules * * * * * * * * * * * * * * * * * * #
 all: $(SERVER) $(CLIENT)
 
 %.o: %.c $(HEADER_FILES)
