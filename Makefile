@@ -6,7 +6,7 @@
 #    By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/27 13:18:51 by mpepin            #+#    #+#              #
-#    Updated: 2022/06/03 15:23:33 by mpepin           ###   ########lyon.fr    #
+#    Updated: 2022/06/04 14:55:38 by mpepin           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,9 @@ CLIENT_SRCS =	source_client/client.c\
 CLIENT_OBJS =	$(CLIENT_SRCS:.c=.o)
 
 
+# * * * * * * * * * * * * * * * Other Stuff * * * * * * * * * * * * * * * *	#
+FT_PRINTF =	mpep_ftprintf/libftprintf.a
+
 # * * * * * * * * * * * * * * * Compilation * * * * * * * * * * * * * * * *	#
 CC =	gcc
 C_FLAGS =	-Wall -Wextra -Werror -I.
@@ -36,12 +39,15 @@ all: $(SERVER) $(CLIENT)
 
 %.o: %.c $(HEADER_FILES)
 	$(CC) $(C_FLAGS) -c $< -o $@
+	
+$(FT_PRINTF):
+	make -C mpep_ftprintf
+	
+$(SERVER): $(SERVER_OBJS) $(FT_PRINTF)
+	$(CC) $(SERVER_OBJS) $(FT_PRINTF) -o $(SERVER)
 
-$(SERVER): $(SERVER_OBJS)
-	$(CC) $(SERVER_OBJS) -o $(SERVER)
-
-$(CLIENT): $(CLIENT_OBJS)
-	$(CC) $(CLIENT_OBJS) -o $(CLIENT)
+$(CLIENT): $(CLIENT_OBJS) $(FT_PRINTF)
+	$(CC) $(CLIENT_OBJS) $(FT_PRINTF) -o $(CLIENT)
 
 norme:
 	@norminette $(SERVER_SRCS)
@@ -49,9 +55,11 @@ norme:
 	@norminette $(HEADER_FILES)
 
 clean:
+	make -C mpep_ftprintf clean
 	rm -f $(SERVER_OBJS) $(CLIENT_OBJS)
 
 fclean: clean
+	make -C mpep_ftprintf fclean
 	rm -f $(SERVER) $(CLIENT)
 
 re: fclean all

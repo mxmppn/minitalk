@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 14:40:51 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/03 15:13:11 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/04 14:35:04 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	my_handler(int signum, siginfo_t *info, void *context)
 	count--;
 	if (count == -1)
 	{
-		write(1, &my_char, 1);
+		ft_printf("%c", my_char);
 		my_char = 0;
 		count = 7;
 	}
@@ -63,12 +63,12 @@ int	main(int ac, char **av)
 	(void) **av;
 	if (ac != 1)
 	{
-		printf("[ARG NBR ERROR] : 0 argument needed\n");
+		ft_printf("[ARG NBR ERROR] : 0 argument needed\n");
 		exit(EXIT_FAILURE);
 	}
 	server_pid = getpid();
 	if (server_pid)
-		printf("[SUCCESS] : Server opened\nCurrent PID=%d\n", server_pid);
+		ft_printf("[SUCCESS] : Server opened\nCurrent PID=%d\n", server_pid);
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_sigaction = my_handler;
 	sigaction(SIGUSR1, &sa, NULL);

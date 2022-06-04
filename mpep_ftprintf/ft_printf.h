@@ -1,57 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/15 16:23:43 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/04 14:23:05 by mpepin           ###   ########lyon.fr   */
+/*   Created: 2021/12/21 19:52:11 by mpepin            #+#    #+#             */
+/*   Updated: 2022/01/05 20:25:11 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 /* ************************************************************************ */
+/*																			*/
 /*																			*/
 /*								LIBRAIRIES									*/
 /*																			*/
+/*																			*/
 /* ************************************************************************ */
 
-# include <string.h>
-# include <stdio.h>
-# include <unistd.h>
+# include <stdarg.h>
 # include <stdlib.h>
-# include <sys/types.h>
-# include <signal.h>
-# include "mpep_ftprintf/ft_printf.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
 
 /* ************************************************************************ */
 /*																			*/
-/*								STRUCTURES									*/
-/*																			*/
-/* ************************************************************************ */
-
-/*						THIS IS PRETTY EMPTY, ISN'T IT ?					*/
-
-/* ************************************************************************ */
 /*																			*/
 /*								FUNCTIONS									*/
 /*																			*/
-/* ************************************************************************ */
-
-int			check_pid_fmt(char *str);
-int			str_to_int(const char *str);
-void		send_binary_to_serv(int nbr, int ue_pid);
-void		my_handler(int signum, siginfo_t *info, void *context);
-
-/* ************************************************************************ */
-/*																			*/
-/*								GLOBAL VARIABLES							*/
 /*																			*/
 /* ************************************************************************ */
 
-/*						THIS IS PRETTY EMPTY, ISN'T IT ?					*/
+int			ft_printf(const char *fmt, ...);
+void		ft_print_fmt(char c, va_list params, int *char_nbr);
+void		ft_print_fmt_c(va_list params, int *char_nbr);
+void		ft_print_fmt_d(va_list params, int *char_nbr);
+void		ft_print_fmt_i(va_list params, int *char_nbr);
+void		ft_print_fmt_p(va_list params, int *char_nbr);
+void		ft_print_fmt_s(va_list params, int *char_nbr);
+void		ft_print_fmt_u(va_list params, int *char_nbr);
+void		ft_print_fmt_x(va_list params, int *char_nbr);
+void		ft_print_fmt_xx(va_list params, int *char_nbr);
+void		ft_print_fmt_percent(int *char_nbr);
 
 #endif

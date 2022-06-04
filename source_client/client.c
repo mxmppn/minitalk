@@ -6,7 +6,7 @@
 /*   By: mpepin <mpepin@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 16:28:30 by mpepin            #+#    #+#             */
-/*   Updated: 2022/06/03 14:54:11 by mpepin           ###   ########lyon.fr   */
+/*   Updated: 2022/06/04 15:01:26 by mpepin           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,16 @@ int	main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		printf("[ARG NBR ERROR] : 2 arguments needed : PID and String\n");
+		ft_printf("[ARG NBR ERROR] : 2 arguments needed : PID and String\n");
 		return (-1);
 	}
 	if (check_pid_fmt(av[1]) == -1)
 	{
-		printf("[ARG TYPE ERROR] : Wrong PID format\n");
+		ft_printf("[ARG TYPE ERROR] : Wrong PID format\n");
 		return (-1);
 	}
 	ue_pid = str_to_int(av[1]);
 	i = 0;
-	printf("PID=%d\n", ue_pid);
 	while (av[2][i])
 	{
 		char_to_send = av[2][i];
@@ -68,5 +67,6 @@ int	main(int ac, char **av)
 		i++;
 		usleep(50);
 	}
+	ft_printf("PID=%d\n", ue_pid);
 	return (0);
 }
